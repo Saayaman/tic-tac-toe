@@ -5,35 +5,48 @@ import "./Board.scss";
 
 interface BoardProps {
   playerTurn: number;
-  changePlayerTurn: () => void;
+  changePlayerTurn: (tileValues: Array<string | null>) => void;
+  gameResult: string | null;
 }
 
-class Board extends React.Component<BoardProps> {
+interface BoardState {
+  tileValues: Array<string | null>
+}
+
+class Board extends React.Component<BoardProps, {tileValues: Array<string | null>}>{
 
   state = {
-    tileValues: []
+    tileValues: Array(9).fill(null),
   }
 
   handleClickTile = (num: number, playerTurn: number) => {
-    console.log('number!', num);
-    let currentState: Array<string | undefined> = this.state.tileValues;
+    const { tileValues } = this.state;
+    let currentState: Array<string | null> = tileValues;
     currentState[num] = playerTurn === 1 ? "⭕" : "❌";
     this.setState({
-      tileValues: currentState,
-    })
-
-    this.props.changePlayerTurn();
+      tileValues: currentState
+    });
+    this.props.changePlayerTurn(currentState);
   }
 
   renderTiles = ( ) => {
+    let disabled = false;
+
+    if (this.props.gameResult) {
+        disabled = true;
+    }
     let tiles = [];
+
+    const { tileValues } = this.state;
     for (let i: number = 0; i < 9; ++i) {
       tiles.push(
         <Tile key={i}
           num={i}
-          value={this.state.tileValues[i]}
+          value={tileValues[i]}
           clickTile={this.handleClickTile}
-          playerTurn={this.props.playerTurn} />
+          playerTurn={this.props.playerTurn}
+          disabled={disabled}
+          />
       )
     }
 

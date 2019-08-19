@@ -5,13 +5,14 @@ interface TileProps {
   playerTurn: number;
   value: string;
   num: number;
+  disabled: boolean;
   clickTile: (num: number, playerTurn: number) => void;
 }
 
-const Tile = ({ num, clickTile, value, playerTurn}: TileProps) => {
+const Tile = ({ num, clickTile, value, playerTurn, disabled }: TileProps) => {
 
   return (
-  <button onClick={() => clickTile(num, playerTurn)} className="Tile">{value}</button>
+  <button disabled={disabled} onClick={() => clickTile(num, playerTurn)} className="Tile">{value}</button>
   )
 }
 
