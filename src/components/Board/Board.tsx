@@ -2,17 +2,35 @@ import React from 'react';
 import Tile from '../Tile/Tile';
 import "./Board.scss";
 
-class Board extends React.Component {
+
+interface BoardProps {
+  playerTurn: number;
+}
+
+class Board extends React.Component<BoardProps> {
 
   state = {
-    tiles: []
+    tileValues: []
+  }
+
+  handleClickTile = (num: number, playerTurn: number) => {
+    console.log('number!', num);
+    let currentState: Array<string | undefined> = this.state.tileValues;
+    currentState[num] = playerTurn === 1 ? "⭕" : "❌";
+    this.setState({
+      tileValues: currentState,
+    })
   }
 
   renderTiles = ( ) => {
     let tiles = [];
     for (let i: number = 0; i < 9; ++i) {
       tiles.push(
-        <Tile key={i} num={i} />
+        <Tile key={i}
+          num={i}
+          value={this.state.tileValues[i]}
+          clickTile={this.handleClickTile}
+          playerTurn={this.props.playerTurn} />
       )
     }
 
