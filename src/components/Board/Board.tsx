@@ -45,7 +45,7 @@ class Board extends React.Component<BoardProps, {tileValues: Array<string | null
           value={tileValues[i]}
           clickTile={this.handleClickTile}
           playerTurn={this.props.playerTurn}
-          disabled={disabled}
+          disabled={disabled ? disabled : tileValues[i]}
           />
       )
     }
