@@ -5,6 +5,7 @@ import "./Board.scss";
 
 interface BoardProps {
   playerTurn: number;
+  changePlayerTurn: () => void;
 }
 
 class Board extends React.Component<BoardProps> {
@@ -20,6 +21,8 @@ class Board extends React.Component<BoardProps> {
     this.setState({
       tileValues: currentState,
     })
+
+    this.props.changePlayerTurn();
   }
 
   renderTiles = ( ) => {
